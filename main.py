@@ -42,7 +42,31 @@ def error_message(flag):
         return 1
 
 
+def errors():
+    if check_output() == 0 and check_input() == 0:
+        error_message(3)
+        return 1
+    if check_input() == 0:
+        error_message(1)
+        return 1
+    if check_output() == 0:
+        error_message(2)
+        return 1
+    return 0
+
+
 def read_xlxs_file():
     xlxs_file = pd.read_excel('sales.xlsx')
     data = pd.DataFrame(xlxs_file, columns=['Sales Date'])
     return data
+
+
+def write_in_pdf_file():
+    
+
+def program():
+    if errors():
+        return 0
+    exel_data = read_xlxs_file()
+    if write_in_pdf_file():
+        return 1
