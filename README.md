@@ -2,5 +2,5 @@
 ## 1) Установить pandas
 Откройте терминал и выполните следующую команду:  
 ```
-    pip install pandas
+    pip install openpyxl
 ```
