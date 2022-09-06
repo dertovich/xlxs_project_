@@ -1,5 +1,6 @@
 import os
-import pandas as pd
+import asposewordscloud
+from openpyxl import load_workbook
 
 
 def check_input():
@@ -56,17 +57,32 @@ def errors():
 
 
 def read_xlxs_file():
-    xlxs_file = pd.read_excel('sales.xlsx')
-    data = pd.DataFrame(xlxs_file, columns=['Sales Date'])
+    wb = load_workbook('file.xlsx')
+    ws = wb.active
+    data = ws['A1'].value
     return data
 
 
-def write_in_pdf_file():
-    
+def write_in_pdf_file(data):
+    words_api = WordsApi(client_id='####-####-####-####-####',
+                         client_secret='##################')
+
+    request_document = open('Input.pdf', 'rb')
+    request_paragraph = asposewordscloud.ParagraphInsert(data)
+
+    insert_paragraph_request = asposewordscloud.models.requests.InsertParagraphOnlineRequest(
+        document=request_document, paragraph=request_paragraph)
+    insert_paragraph = words_api.insert_paragraph_online(insert_paragraph_request)
+
+    convert_request = asposewordscloud.models.requests.ConvertDocumentRequest(
+        document=list(insert_paragraph.document.values())[0], format='pdf')
+    convert = words_api.convert_document(convert_request)
+    return 1
 
 def program():
     if errors():
         return 0
     exel_data = read_xlxs_file()
-    if write_in_pdf_file():
-        return 1
+    write_in_pdf_file(exel_data)
+
+program()
