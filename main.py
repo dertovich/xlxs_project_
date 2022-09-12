@@ -1,17 +1,17 @@
 import os
-import asposewordscloud
+from fillpdf import fillpdfs
 from openpyxl import load_workbook
 
 
 def check_input():
-    for in_file in os.listdir("/mydir"):
+    for in_file in os.listdir("/"):
         if in_file.endswith(".xlxs"):
             return 1
     return 0
 
 
 def check_output():
-    for out_file in os.listdir("/mydir"):
+    for out_file in os.listdir("/"):
         if out_file.endswith(".pdf"):
             return 1
     return 0
@@ -64,25 +64,16 @@ def read_xlxs_file():
 
 
 def write_in_pdf_file(data):
-    words_api = WordsApi(client_id='####-####-####-####-####',
-                         client_secret='##################')
-
-    request_document = open('Input.pdf', 'rb')
-    request_paragraph = asposewordscloud.ParagraphInsert(data)
-
-    insert_paragraph_request = asposewordscloud.models.requests.InsertParagraphOnlineRequest(
-        document=request_document, paragraph=request_paragraph)
-    insert_paragraph = words_api.insert_paragraph_online(insert_paragraph_request)
-
-    convert_request = asposewordscloud.models.requests.ConvertDocumentRequest(
-        document=list(insert_paragraph.document.values())[0], format='pdf')
-    convert = words_api.convert_document(convert_request)
+    fillpdfs.get_form_fields("blank.pdf")
+    fillpdfs.write_fillable_pdf('blank.pdf', 'new.pdf', data)
     return 1
+
 
 def program():
     if errors():
         return 0
     exel_data = read_xlxs_file()
     write_in_pdf_file(exel_data)
+
 
 program()
