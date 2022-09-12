@@ -4,14 +4,14 @@ from openpyxl import load_workbook
 
 
 def check_input():
-    for in_file in os.listdir("/"):
-        if in_file.endswith(".xlxs"):
+    for in_file in os.listdir("/home/valentin/PycharmProjects/pythonProject"):
+        if in_file.endswith(".xlsx"):
             return 1
     return 0
 
 
 def check_output():
-    for out_file in os.listdir("/"):
+    for out_file in os.listdir("/home/valentin/PycharmProjects/pythonProject"):
         if out_file.endswith(".pdf"):
             return 1
     return 0
@@ -56,23 +56,24 @@ def errors():
     return 0
 
 
-def read_xlxs_file():
-    wb = load_workbook('file.xlsx')
+def read_xlsx_file():
+    wb = load_workbook('file.xlsx', data_only=True)
     ws = wb.active
-    data = ws['A1'].value
+    data = ws['C26'].value
     return data
 
 
-def write_in_pdf_file(data):
+def write_in_pdf_file(exel_data):
     fillpdfs.get_form_fields("blank.pdf")
-    fillpdfs.write_fillable_pdf('blank.pdf', 'new.pdf', data)
+    fillpdfs.write_fillable_pdf('blank.pdf', 'new_blank.pdf', exel_data)
     return 1
 
 
 def program():
     if errors():
         return 0
-    exel_data = read_xlxs_file()
+    exel_data = read_xlsx_file()
+    print(exel_data)
     write_in_pdf_file(exel_data)
 
 
