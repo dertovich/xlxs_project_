@@ -59,13 +59,15 @@ def errors():
 def read_xlsx_file():
     wb = load_workbook('file.xlsx', data_only=True)
     ws = wb.active
-    data = ws['C26'].value
+    data_1 = ws['C26'].value
+    data_2 = ws['D26'].value
+    data = [data_1, data_2]
     return data
 
 
 def write_in_pdf_file(exel_data):
-    fillpdfs.get_form_fields("blank.pdf")
-    fillpdfs.write_fillable_pdf('blank.pdf', 'new_blank.pdf', exel_data)
+    dict_data = dict(zip(fillpdfs.get_form_fields("blank.pdf")))
+    fillpdfs.write_fillable_pdf('blank.pdf', 'new_blank.pdf', dict_data)
     return 1
 
 
