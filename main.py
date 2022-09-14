@@ -4,14 +4,14 @@ from openpyxl import load_workbook
 
 
 def check_input():
-    for in_file in os.listdir("/home/valentin/PycharmProjects/pythonProject"):
+    for in_file in os.listdir(os.getcwd()):
         if in_file.endswith(".xlsx"):
             return 1
     return 0
 
 
 def check_output():
-    for out_file in os.listdir("/home/valentin/PycharmProjects/pythonProject"):
+    for out_file in os.listdir(os.getcwd()):
         if out_file.endswith(".pdf"):
             return 1
     return 0
